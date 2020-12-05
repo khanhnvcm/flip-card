@@ -1,0 +1,32 @@
+.full-size
+	.row.justify-content-center
+		.shadow style="margin-bottom:50px"
+			|FLIP CARD GAME
+		.input-group.justify-content-center
+			= form_tag(newgame_path, :method => "get") do
+				= text_field_tag :user, '', class: "form-control", placeholder: 'Enter your name'
+				br
+				.div style="margin-left: 44px"
+					= submit_tag "New Game", class: "btn btn-danger"
+					br
+					span.tooltiptext style="margin-left: -200px; margin-top: -50px" Tips: Flip a pair cards has the same rank 
+
+				br
+		= link_to 'Leaderboard', games_path, data: {turbolinks: false}, class: "btn btn-danger"
+	br
+	.row
+		.col-md-6.offset-md-3
+			table.table.table-striped.table-dark
+				thead
+					tr
+						th No.
+						th Username
+						th Move times
+						th Time played
+				- @games.each_with_index do |game, id|
+					tr
+						td= id + 1
+						td= game.user
+						td= game.move 
+						td= "#{game.time/60} minutes and #{game.time%60} seconds"	
+

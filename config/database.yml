@@ -1,0 +1,15 @@
+default: &default
+  adapter: mysql2
+  encoding: utf8mb4
+  charset: utf8mb4
+  strict: true
+  pool: <%= ENV["PUMA_MAX_THREADS"] || 5 %>
+  url: mysql2://root:@127.0.0.1:3306/flip-card
+
+development:
+  <<: *default
+  database: flip-card
+
+test:
+  <<: *default
+  url: mysql2://root:@127.0.0.1:3306/flip-card_test

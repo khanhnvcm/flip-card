@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>FlipCard</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <style>
+      body {
+        background: forestgreen url(/assets/TrucXanh.jpg) repeat;
+        background-size: 78%;
+      }
+
+      @keyframes color-animation {
+      0% {border: 2px solid darkred;}
+      17% {border: 2px dashed darkorange;} 
+      33% {border: 2px double darkgoldenrod} 
+      50% {border: 2px dotted darkgreen}
+      66% {border: 2px outset darkblue}
+      83% {border: 2px dashed indigo}
+      100% {border: 2px ridge darkviolet}
+      }
+
+      img {
+          height: 150px;
+          width: 97px;
+          background-size: cover;
+      }
+
+      .board-game {
+        background-color: white;
+        border: 5px solid darkgreen;
+        padding: 5px;
+        margin: 1px 5px 1px 5px;
+      }
+      /* flip the pane when hovered */
+
+      .flip-container.hover .flipper {
+          transform: rotateY(180deg);
+      }
+
+      .flip-container {
+          width: 104px;
+          height: 154px;
+          border: 2px solid white;
+          margin: 0px 2px 0px 2px;
+      }
+
+      .flip-container, .front, .back {
+          display: inline-block;
+      }
+
+
+      /* flip speed */
+
+      .flipper {
+          transition: 0.8s;
+          transform-style: preserve-3d;
+          position: relative;
+      }
+
+
+      /* hide back of pane during swap */
+
+      .front, .back {
+          width: 97px;
+          height: 150px;
+          backface-visibility: hidden;
+          position: absolute;
+          top: 0;
+          left: 0;
+      }
+
+
+      /* front pane, placed above back */
+
+      .front {
+          z-index: 2;
+          transform: rotateY(180deg);
+      }
+
+
+      /* back, initially hidden pane */
+
+      .back {
+          transform: rotateY(0deg);
+          background-image: url(/assets/purple_back.jpg);
+          background-size: 101%;
+      }
+
+    </style>
+
+    <script>
+      $(document).ready(function(){
+
+        // Variables
+        var turn = 0;
+        var move = 0;
+        var pairs = 0;
+        var id1;
+        var id2;
+        // Count time variables
+        var totalSeconds = 0;
+        var seconds = document.getElementById("seconds");
+        var minutes = document.getElementById("minutes");
+        var clock = setInterval(showTime, 1000); 
+        //Count time
+        function showTime() {
+          ++totalSeconds;
+          seconds.innerHTML = pad(totalSeconds % 60);
+          minutes.innerHTML = pad(parseInt(totalSeconds / 60));
+        }
+        function pad(val) {
+          var valString = val + "";
+          if (valString.length < 2) {
+            return "0" + valString;
+          } else {
+            return valString;
+          }
+        }
+
+        // Select cards
+        $(".flip-container").hover(function(){
+            $(this).css("animation", "color-animation 2s infinite linear alternate");
+            }, function(){
+            $(this).css("animation", "none");
+        });
+        
+        // Flip cards
+        $('.flip-container .flipper').click(function() {
+
+          //Sound
+          var soundTrack = document.getElementById("soundtrack");;
+          var flipCard = document.getElementById("flip-card");;
+          soundTrack.volume = 0.03;
+          flipCard.volume = 0.4;
+          $(soundTrack)[0].play();
+          
+          switch(turn) {
+
+            case 0:
+              if($(this).parent().attr("id") == "down") {
+                $(this).closest('.flip-container').addClass('hover');
+                  $(this).css('transform, rotateY(180deg)');
+                $(this).parent().attr("id", "up");
+                $(flipCard)[0].play();
+                turn += 1;
+                id1 = $(this).attr("id");
+              }
+              break;
+
+            case 1:
+              if($(this).parent().attr("id") == "down") {
+                $(this).closest('.flip-container').addClass('hover');
+                  $(this).css('transform, rotateY(180deg)');
+                $(this).parent().attr("id", "up");
+                $(flipCard)[0].play();
+                turn += 1;
+                
+                // Compare cards
+                id2 = $(this).attr("id");
+                if(id1[0] == id2[0]) {
+                  setTimeout(function() {
+                    $("audio#right")[0].play();
+                    $('.flip-container#up').attr('id', '');
+                    turn = 0;
+                    $("strong#move").text(move += 1);
+                  }, 1000);
+                  pairs += 1;
+                  //Save Record
+                  if(pairs == 26) {
+                    setTimeout(function() {
+                      clearInterval(clock);
+                      var username = $("strong#username").text();
+                      $('input[type="text"]#game_user').val(username);
+                      $('input[type="text"]#game_move').val(move);
+                      $('input[type="text"]#game_time').val(totalSeconds);
+                      $('input[type="text"]#game_point').val(move * 5 + totalSeconds);
+                      alert('You have finished with ' + move + ' moves, in ' + parseInt(totalSeconds/60) + ' minutes and ' + totalSeconds%60 + ' seconds.');
+                      $('#form').submit();
+                    }, 1000);
+                  }
+
+                } else {
+                  setTimeout(function() {
+                    $('.flip-container#up.flipper').css('transform, rotateY(180deg)');
+                    $('.flip-container#up').removeClass('hover');
+                    $('.flip-container#up').attr("id", "down");
+                    $("audio#wrong")[0].play();
+                    turn = 0;
+                    $("strong#move").text(move += 1);
+                  }, 1000);
+                }
+              }  
+              break;
+          }
+        });
+      });
+    </script>
+  </head>
+
+  <body>
+    <%= yield %>
+  </body>
+</html>

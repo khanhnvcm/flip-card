@@ -1,0 +1,59 @@
+.row
+	.col-2
+		.btn.btn-info style="cursor: default;"
+			|User: 
+			strong#username =@user
+	.col-8
+		.row.justify-content-center
+			.col-3
+			.col-auto
+				.btn.btn-danger style="cursor: default;"
+					|Time played: 
+					strong id="minutes" 00
+					|:
+					strong id="seconds" 00
+			.col-auto
+				.btn.btn-danger style="cursor: default;"
+					|Move: 
+					strong id='move' 0
+			.col-3
+	.col-2.row.justify-content-end
+		= link_to 'Quit', root_path, data: {turbolinks: false}, class: "btn btn-info"
+
+.board-game
+	- @new_game.each do |card|
+		.flip-container id="down"
+			.flipper id="#{card}"
+				.front
+					= image_tag("#{card}.jpg", size: "97x150")
+				.back
+audio id="flip-card" controls="controls" style="visibility: hidden" 
+  source src="assets/flip_card.mp3" type="audio/mpeg"
+audio id="right" controls="controls" style="visibility: hidden"
+  source src="assets/right.mp3" type="audio/mpeg" 
+audio id="wrong" controls="controls" style="visibility: hidden"
+  source src="assets/wrong.mp3" type="audio/mpeg"
+audio id="soundtrack" controls="controls" preload="auto" style="visibility: hidden"
+  source src="assets/soundtrack.mp3" type="audio/mpeg"
+
+.invisible
+	= form_with model: @game, local: true, :html => {:id => "form"} do |form|
+	  / - if @game.errors.any?
+	  /   #error_explanation
+	  /     h2
+	  /       = pluralize(@game.errors.count, "error")
+	  /       | prohibited
+	  /       | this record from being saved:
+	  /     ul
+	  /       - @game.errors.full_messages.each do |msg|
+	  /         li= msg
+	  p
+	    = form.label :user
+	    = form.text_field :user
+	    = form.label :move
+	    = form.text_field :move
+	    = form.label :time
+	    = form.text_field :time
+	    = form.label :point
+	    = form.text_field :point
+	    = form.submit

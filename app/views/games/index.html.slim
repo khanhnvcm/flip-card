@@ -1,0 +1,23 @@
+.row style="margin-top: 20px"
+	.col-1
+	.col-1
+		= link_to 'Home', root_path, data: {turbolinks: false}, class: "btn btn-primary"
+	.col-10
+
+.row style="margin-top: 20px"
+		.col-md-10.offset-md-1
+			table.table.table-striped.table-dark
+				thead
+					tr
+						th No.
+						th Username
+						th Move times
+						th Time played
+						th Relatively Point
+				- @games.each_with_index do |game, id|
+					tr
+						td= id + 1
+						td= game.user
+						td= game.move 
+						td= "#{game.time/60} minutes and #{game.time%60} seconds"	
+						td= game.point
