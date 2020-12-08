@@ -26,9 +26,9 @@
 						th Time played
 						th Relatively Point
 						th Date
-				- @games.each_with_index do |game, id|
+				- @game.each do |game|
 					tr
-						td= id + 1
+						td= @games.find_index(game) + 1
 						td= game.user
 						td= game.move 
 						td= "#{game.time/60} minutes and #{game.time%60} seconds"	

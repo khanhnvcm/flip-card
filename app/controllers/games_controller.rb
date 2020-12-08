@@ -37,8 +37,9 @@ class GamesController < ApplicationController
   end
 
 	def index
+    @games = Game.all.order(point: :asc)
     @q = Game.ransack(search_params)
-    @games = @q.result.order(point: :asc)
+    @game = @q.result.order(point: :asc)
 	end
 
   private
