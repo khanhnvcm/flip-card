@@ -30,6 +30,9 @@ gem 'bootsnap', '>= 1.4.2', require: false
 gem 'slim-rails'
 gem 'bootstrap', '~> 4.0.0'
 gem 'jquery-rails'
+#Use Ransack for search and filter record
+gem 'ransack'
+
 
 group :production do
   gem 'pg'

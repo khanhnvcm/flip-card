@@ -38,15 +38,6 @@ audio id="soundtrack" controls="controls" preload="auto" style="visibility: hidd
 
 .invisible
 	= form_with model: @game, local: true, :html => {:id => "form"} do |form|
-	  / - if @game.errors.any?
-	  /   #error_explanation
-	  /     h2
-	  /       = pluralize(@game.errors.count, "error")
-	  /       | prohibited
-	  /       | this record from being saved:
-	  /     ul
-	  /       - @game.errors.full_messages.each do |msg|
-	  /         li= msg
 	  p
 	    = form.label :user
 	    = form.text_field :user

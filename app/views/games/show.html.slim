@@ -1,0 +1,23 @@
+.row style="margin-top: 20px"
+	.col-1
+	.col-1
+		= link_to 'Home', root_path, data: {turbolinks: false}, class: "btn btn-primary"
+	.col-10
+.row
+		.col-md-10.offset-md-1
+			table.table.table-striped.table-dark
+				thead
+					tr
+						th Rank
+						th Username
+						th Move
+						th Time played
+						th Relatively Point
+						th Date
+					tr
+						td= @index
+						td= @game.user
+						td= @game.move
+						td= "#{@game.time/60} minutes and #{@game.time%60} seconds"
+						td= @game.point
+						td= @game.created_at.advance(hours: 7).strftime('%Y-%m-%d %H:%M:%S')
