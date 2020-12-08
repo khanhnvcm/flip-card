@@ -3,14 +3,18 @@
 		.col-md-6.offset-md-3
 			.shadow style="margin-bottom:50px"
 				|FLIP CARD GAME
+			.row.justify-content-center
+				-if alert
+					.alert.alert-danger style="position: fixed; margin-top: -55px"
+						strong = alert
 			.input-group.justify-content-center
 				= form_tag(newgame_path, :method => "get") do
 					= text_field_tag :user, '', class: "form-control", placeholder: 'Enter your name'
 					br
-					.div style="margin-left: 44px"
+					.submit
 						= submit_tag "New Game", class: "btn btn-danger"
 						br
-						span.tooltiptext style="margin-left: -200px; margin-top: -50px" Tips: Flip a pair cards has the same rank
+						span.tooltiptext style="margin-left: -270px; margin-top: -50px" Tips: Flip a pair cards has the same rank
 			br
 			.row.justify-content-center
 				= link_to 'Leaderboard', games_path, data: {turbolinks: false}, class: "btn btn-danger"

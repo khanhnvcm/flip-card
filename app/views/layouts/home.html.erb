@@ -49,7 +49,11 @@
          -o-transition:      all 0.12s ease-out;
       }
 
-      .div .tooltiptext {
+      .submit {
+        text-align: center;
+      }
+
+      .submit .tooltiptext {
         visibility: hidden;
         width: 200px;
         background-color: black;
@@ -63,7 +67,7 @@
         z-index: 1;
       }
 
-      .div:hover .tooltiptext {
+      .submit:hover .tooltiptext {
         visibility: visible;
       }
       
@@ -80,24 +84,6 @@
   </head>
 
   <body>
-    <% if notice %>
-      <row>
-        <div class="col-md-6 offset-md-3">
-          <div class="d-flex justify-content-center">
-            <strong class="alert alert-success" style="position: fixed; margin-top: 120px;"><%= notice %></strong>
-          </div>
-        </div>
-      </row>
-    <% end %>
-    <% if alert %>
-      <row>
-        <div class="col-md-6 offset-md-3">
-          <div class="d-flex justify-content-center">
-            <strong class=" alert alert-danger" style="position: fixed; margin-top: 120px;"><%= alert %></strong>
-          </div>
-        </div>
-      </row>
-    <% end %>
     <%= yield %>
   </body>
 </html>
