@@ -47,6 +47,10 @@
           height: 155px;
           border: 2px solid white;
           margin: 0px 1px 0px 1px;
+          perspective: 800px;
+          -webkit-perspective: 800px;
+          -o-perspective: 800px;
+          -moz-perspective: 800px;
       }
 
       .flip-container, .front, .back {
@@ -60,6 +64,12 @@
           transition: 0.8s;
           transform-style: preserve-3d;
           position: relative;
+          -webkit-transform-style: preserve-3d;
+          -webkit-transition: -webkit-transform 0.8s;
+          -o-transform-style: preserve-3d;
+          -o-transition: -o-transform 0.8s;
+          -moz-transform-style: preserve-3d;
+          -moz-transition: -moz-transform 0.8s;
       }
 
 
@@ -69,6 +79,9 @@
           width: 100px;
           height: 150px;
           backface-visibility: hidden;
+          -moz-backface-visibility: hidden;
+          -webkit-backface-visibility: hidden;
+          -o-backface-visibility: hidden;
           position: absolute;
           top: 0;
           left: 0;
@@ -80,6 +93,10 @@
       .front {
           z-index: 2;
           transform: rotateY(180deg);
+          -moz-transform: rotateY(180deg);
+          -webkit-transform: rotateY(180deg);
+          -o-transform: rotateY(180deg);
+
       }
 
 
@@ -87,6 +104,9 @@
 
       .back {
           transform: rotateY(0deg);
+          -moz-transform: rotateY(0deg);
+          -webkit-transform: rotateY(0deg);
+          -o-transform: rotateY(0deg);
           background-image: url(/assets/purple_back.jpg);
           background-size: 101%;
       }
@@ -106,7 +126,7 @@
         var totalSeconds = 0;
         var seconds = document.getElementById("seconds");
         var minutes = document.getElementById("minutes");
-        var clock = setInterval(showTime, 1000); 
+        setInterval(showTime, 1000);
         //Count time
         function showTime() {
           ++totalSeconds;
@@ -145,11 +165,11 @@
         $('.flip-container .flipper').click(function() {
 
           //Sound
-          var soundTrack = document.getElementById("soundtrack");;
-          var flipCard = document.getElementById("flip-card");;
+          var soundTrack = document.getElementById("soundtrack");
           soundTrack.volume = 0.03;
-          flipCard.volume = 0.4;
           $(soundTrack)[0].play();
+          var flipCard = new Audio("assets/flip_card.mp3");
+          flipCard.volume = 0.4;
           
           switch(turn) {
 
@@ -176,7 +196,8 @@
                 id2 = $(this).attr("id");
                 if(id1[0] == id2[0]) {
                   setTimeout(function() {
-                    $("audio#right")[0].play();
+                    var right = new Audio("assets/right.mp3");
+                    $(right)[0].play();
                     $('.flip-container#up').attr('id', '');
                     turn = 0;
                     $("strong#move").text(move += 1);
@@ -201,7 +222,8 @@
                     $('.flip-container#up.flipper').css('transform, rotateY(180deg)');
                     $('.flip-container#up').removeClass('hover');
                     $('.flip-container#up').attr("id", "down");
-                    $("audio#wrong")[0].play();
+                    var wrong = new Audio("assets/wrong.mp3");
+                    $(wrong)[0].play();
                     turn = 0;
                     $("strong#move").text(move += 1);
                   }, 1000);
