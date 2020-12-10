@@ -24,8 +24,8 @@
       }
 
       img {
-          height: 145px;
-          width: 95px;
+          height: 150px;
+          width: 100px;
           background-size: cover;
       }
 
@@ -34,7 +34,7 @@
         text-align: center;
         border: 5px solid darkgreen;
         padding: 5px;
-        margin: 1px 5px 1px 5px;
+        margin: 1px 2px 1px 2px;
       }
       /* flip the pane when hovered */
 
@@ -43,10 +43,10 @@
       }
 
       .flip-container {
-          width: 100px;
-          height: 150px;
+          width: 105px;
+          height: 155px;
           border: 2px solid white;
-          margin: 0px 2px 0px 2px;
+          margin: 0px 1px 0px 1px;
       }
 
       .flip-container, .front, .back {
@@ -66,8 +66,8 @@
       /* hide back of pane during swap */
 
       .front, .back {
-          width: 95px;
-          height: 145px;
+          width: 100px;
+          height: 150px;
           backface-visibility: hidden;
           position: absolute;
           top: 0;
@@ -121,6 +121,18 @@
             return valString;
           }
         }
+
+        // Auto resize cards
+        $(window).resize(function(){
+          if(window.outerWidth > 760) {
+            var w = window.outerWidth/14 - 3;
+            var h = w * 1.5;
+            $(".front").css({"width": w, "height": h});
+            $(".back").css({"width": w, "height": h});
+            $("img").css({"width": w, "height": h});
+            $(".flip-container").css({"width": w*1.05, "height": h*1.05});
+          } 
+        });    
 
         // Select cards
         $(".flip-container").hover(function(){
