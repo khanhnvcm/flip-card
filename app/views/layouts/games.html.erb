@@ -201,7 +201,7 @@
                     $('.flip-container#up').attr('id', '');
                     turn = 0;
                     $("strong#move").text(move += 1);
-                  }, 1000);
+                  }, 700);
                   pairs += 1;
                   //Save Record
                   if(pairs == 26) {
@@ -214,19 +214,19 @@
                       $('input[type="text"]#game_point').val(move * 5 + totalSeconds);
                       alert('You have finished with ' + move + ' moves, in ' + parseInt(totalSeconds/60) + ' minutes and ' + totalSeconds%60 + ' seconds.');
                       $('#form').submit();
-                    }, 1000);
+                    }, 700);
                   }
 
                 } else {
                   setTimeout(function() {
+                    var wrong = new Audio("assets/wrong.mp3");
+                    $(wrong)[0].play();
                     $('.flip-container#up.flipper').css('transform, rotateY(180deg)');
                     $('.flip-container#up').removeClass('hover');
                     $('.flip-container#up').attr("id", "down");
-                    var wrong = new Audio("assets/wrong.mp3");
-                    $(wrong)[0].play();
                     turn = 0;
                     $("strong#move").text(move += 1);
-                  }, 1000);
+                  }, 700);
                 }
               }  
               break;
