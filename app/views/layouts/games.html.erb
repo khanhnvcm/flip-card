@@ -115,6 +115,10 @@
 
     <script>
       $(document).ready(function(){
+        var flipCard = new Audio("assets/flip_card.mp3");
+        var right = new Audio("assets/right.mp3");
+        var wrong = new Audio("assets/wrong.mp3");
+        flipCard.volume = 0.4;
 
         // Variables
         var turn = 0;
@@ -126,7 +130,7 @@
         var totalSeconds = 0;
         var seconds = document.getElementById("seconds");
         var minutes = document.getElementById("minutes");
-        setInterval(showTime, 1000);
+        var clock = setInterval(showTime, 1000);
         //Count time
         function showTime() {
           ++totalSeconds;
@@ -168,8 +172,6 @@
           var soundTrack = document.getElementById("soundtrack");
           soundTrack.volume = 0.03;
           $(soundTrack)[0].play();
-          var flipCard = new Audio("assets/flip_card.mp3");
-          flipCard.volume = 0.4;
           
           switch(turn) {
 
@@ -196,7 +198,6 @@
                 id2 = $(this).attr("id");
                 if(id1[0] == id2[0]) {
                   setTimeout(function() {
-                    var right = new Audio("assets/right.mp3");
                     $(right)[0].play();
                     $('.flip-container#up').attr('id', '');
                     turn = 0;
@@ -219,7 +220,6 @@
 
                 } else {
                   setTimeout(function() {
-                    var wrong = new Audio("assets/wrong.mp3");
                     $(wrong)[0].play();
                     $('.flip-container#up.flipper').css('transform, rotateY(180deg)');
                     $('.flip-container#up').removeClass('hover');
