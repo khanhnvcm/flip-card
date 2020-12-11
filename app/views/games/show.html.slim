@@ -3,6 +3,7 @@
 	.col-1
 		= link_to 'Home', root_path, data: {turbolinks: false}, class: "btn btn-primary"
 	.col-10
+br
 .row
 		.col-md-10.offset-md-1
 			table.table.table-striped.table-dark
@@ -21,3 +22,12 @@
 						td= "#{@game.time/60} minutes and #{@game.time%60} seconds"
 						td= @game.point
 						td= @game.created_at.advance(hours: 7).strftime('%Y-%m-%d %H:%M:%S')
+.row
+	.col-1
+	.col-1
+		= form_tag(newgame_path, :method => "get") do
+			.invisible
+				= text_field_tag :user, "#{@game.user}", class: "form-control"
+			.submit
+				= submit_tag "New Game", class: "btn btn-danger"
+	.col-10
